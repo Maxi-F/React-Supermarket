@@ -1,39 +1,40 @@
 import React from 'react';
 import ItemCount from './components/ItemCount';
-import Buttons from './components/Buttons';
+import Items from './components/Items';
 import './App.css';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
+    
     this.state = {
-      itemCount: 0,
-      items: []
+      newItem: '',
+      items: [{id:1, value:'test1'}, {id:2, value:'test2'}]
     }
-    this.modifyItemCount = this.modifyItemCount.bind(this)
-    this.addItemCount = this.addItemCount.bind(this)
-    this.substractItemCount = this.substractItemCount.bind(this)
   }
 
-  modifyItemCount(quantity) {
-    this.setState(prevState => ({
-      itemCount: prevState.itemCount + quantity
-    }))
+  OnChangeNewItemValue = event => {
+    this.setState({newItem: event.target.value})
   }
 
-  addItemCount(event) {
-    this.modifyItemCount(1)
+  OnRemoveItem = itemID => {
+    this.setState(state => ({
+        items: state.items.filter(anItem => itemID !== anItem.id)
+      }));
   }
 
-  substractItemCount(event) {
-    this.modifyItemCount(-1)
+  OnAddNewItem = () => {
+    this.setState(state => ({
+      items: state.items.concat(state.newItem) 
+    }));
   }
 
   render () {
     return (
       <>
-        <ItemCount quantity={this.state.itemCount}/>
-        <Buttons addItem={this.addItemCount} removeItem={this.substractItemCount}/>
+        <ItemCount quantity={this.state.items.length}/>
+        <Items items={this.state.items} removeItem={this.OnRemoveItem}/>
+        {/*<AddItem addItem={this.OnAddNewItem} itemObserver={this.OnChangeNewItemValue}>*/}
       </>
     );
   }

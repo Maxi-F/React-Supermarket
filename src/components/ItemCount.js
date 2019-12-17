@@ -1,5 +1,10 @@
 import React from 'react';
 
-const ItemCount = (props) => (<h1>{props.quantity}</h1>)
+const ItemCount = (props) => (
+    <div>
+        <h1>Supermarket List</h1>
+        <h2>{props.quantity}</h2>
+    </div>
+)
 
 export default ItemCount;
