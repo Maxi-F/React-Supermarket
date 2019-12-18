@@ -7,7 +7,7 @@ const Items = (props) => (
 {props.items.map(item => (
     <div key={item.id}>
     <li>{item.value}</li> 
-    <button onClick={() => props.removeItem(item.id)}>Remove</button>
+    <button onClick={() => props.removeItem(item)}>Remove</button>
     </div>
     ))}
     </ul>
