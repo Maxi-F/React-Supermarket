@@ -1,7 +1,5 @@
 import React from 'react';
-import ItemCount from './components/ItemCount';
-import Items from './components/Items';
-import ItemAdder from './components/ItemAdder'
+import {ItemAdder, Items, ItemCount} from './components';
 import './App.css';
 
 class App extends React.Component {
@@ -11,7 +9,7 @@ class App extends React.Component {
     this.state = {
       newItem: '',
       items: [{id:0, value:'test1'}, {id:1, value:'test2'}],
-      addingItem: true
+      addingItem: false
     }
   }
 
@@ -32,8 +30,17 @@ class App extends React.Component {
       items: state.items.concat({
         id: state.items.length,
         value: state.newItem
-      }) 
+      }),
+      addingItem: false
     }));
+  }
+
+  handleAddNewItem = () => {
+    this.setState(state => ({addingItem: true}))
+  }
+
+  handleCancel = () => {
+    this.setState(state => ({addingItem: false}))
   }
 
   render () {
@@ -41,7 +48,8 @@ class App extends React.Component {
       <>
         <ItemCount quantity={this.state.items.length}/>
         <Items items={this.state.items} removeItem={this.OnRemoveItem}/>
-        {this.state.addingItem ? <ItemAdder item={this.state.newItem} addItem={this.OnAddNewItem} itemObserver={this.OnChangeNewItemValue}/> : null}
+        <button onClick={this.handleAddNewItem}>add new item</button>
+        {this.state.addingItem ? <ItemAdder item={this.state.newItem} addItem={this.OnAddNewItem} itemObserver={this.OnChangeNewItemValue} cancel={this.handleCancel}/> : null}
       </>
     );
   }
